@@ -1,0 +1,696 @@
+/* ---------------------------------------------------- */
+/* 0. BASE STYLES, FONTS, AND VARIABLES (DEEP SPACE THEME) */
+/* ---------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&family=Inter:wght@400;700&display=swap');
+
+:root {
+    /* Primary Palette: Deep Space Black */
+    --color-primary-bg: #0A0A0A; /* Near-Black Background */
+    --color-secondary-bg: #222222; /* Darker Card base */
+    
+    /* Secondary Palette: Pale Stone / Text */
+    --color-text: #F0F0F0; /* Pale Stone/Off-white for main text */
+    
+    /* Accent Color: Emergency Cyan/Cool White */
+    --color-accent: #33CCFF; 
+    
+    /* Border & Shadow */
+    --color-border: #33CCFF; /* Thick Cyan Border */
+    --shadow-sharp: 8px 8px 0px rgba(0, 0, 0, 1); /* Mandatory Sharp Shadow */
+    --transition-speed: 0.1s; /* Faster, responsive interactions */
+
+    /* Typography */
+    --font-heading: 'Source Code Pro', monospace;
+    --font-body: 'Inter', sans-serif;
+    
+    --border-radius-sm: 0.25rem;
+}
+
+/* --- LIGHT MODE STYLES (RE-INTRODUCED FOR THEME TOGGLE) --- */
+html[data-theme="light"] {
+    --color-primary-bg: #FFFFFF;
+    --color-secondary-bg: #F0F0F0;
+    --color-text: #0A0A0A;
+    --color-accent: #007BFF; /* A standard blue for contrast */
+    --color-border: #007BFF;
+    --shadow-sharp: 8px 8px 0px rgba(100, 100, 100, 0.5);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-primary-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+a {
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    color: var(--color-text);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ---------------------------------------------------- */
+/* 1. BACKGROUND AND EFFECTS (Asteroid/Void Vibe) */
+/* ---------------------------------------------------- */
+
+.futuristic-background::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Dotted grid pattern for a high-tech terminal feel */
+    background-image: 
+        repeating-linear-gradient(0deg, var(--color-primary-bg) 0, rgba(51, 204, 255, 0.05) 1px, transparent 1px, transparent 20px),
+        repeating-linear-gradient(90deg, var(--color-primary-bg) 0, rgba(51, 204, 255, 0.05) 1px, transparent 1px, transparent 20px);
+    background-size: 20px 20px;
+    opacity: 0.3; 
+    z-index: -1;
+    transition: opacity var(--transition-speed);
+}
+
+html[data-theme="light"] .futuristic-background::before {
+    opacity: 0.1;
+    background-image: 
+        repeating-linear-gradient(0deg, var(--color-primary-bg) 0, rgba(0, 123, 255, 0.1) 1px, transparent 1px, transparent 20px),
+        repeating-linear-gradient(90deg, var(--color-primary-bg) 0, rgba(0, 123, 255, 0.1) 1px, transparent 1px, transparent 20px);
+}
+
+.futuristic-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-primary-bg);
+    z-index: -2;
+    transition: all var(--transition-speed);
+}
+
+/* Sharp Element Styling (Glassmorphism is out, Graphic Novel is in) */
+.glass-card, .glass-btn {
+    background-color: var(--color-secondary-bg);
+    border: 2px solid var(--color-border); /* Strong, Defined Border */
+    border-radius: var(--border-radius-sm); 
+    box-shadow: var(--shadow-sharp); /* Sharp, non-blurry shadow */
+    padding: 1.5rem;
+    transition: all var(--transition-speed);
+}
+.glass-card:hover {
+    transform: translate(2px, 2px); /* Shift to simulate button press/activation */
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 1);
+}
+
+.glass-btn:hover {
+    border-color: var(--color-text);
+    box-shadow: var(--shadow-sharp);
+}
+
+
+/* ---------------------------------------------------- */
+/* 2. HEADER AND NAVIGATION (System Diagnostics) */
+/* ---------------------------------------------------- */
+#header {
+    position: fixed; 
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: var(--color-primary-bg); 
+    border-bottom: 2px dashed var(--color-accent); /* Dashed Separator */
+    transition: all var(--transition-speed);
+}
+
+#header .container {
+    padding: 1rem 2rem;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    font-family: var(--font-heading);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+.nav-links a {
+    color: var(--color-text);
+    font-weight: 700;
+    padding: 0.5rem 0;
+    position: relative;
+    font-family: var(--font-heading);
+}
+.nav-links a:hover {
+    color: var(--color-accent);
+    text-decoration: underline; 
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    color: var(--color-accent);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.theme-toggle-btn i {
+    stroke: var(--color-accent);
+    width: 24px;
+    height: 24px;
+    transition: opacity var(--transition-speed);
+}
+/* Initial State of Icons - Managed by JS now, but CSS provides fallback */
+.theme-toggle-btn .sun-icon { opacity: 0; }
+.theme-toggle-btn .moon-icon { opacity: 1; }
+html[data-theme="light"] .theme-toggle-btn .sun-icon { opacity: 1; }
+html[data-theme="light"] .theme-toggle-btn .moon-icon { opacity: 0; }
+
+
+/* ---------------------------------------------------- */
+/* 3. BUTTONS (Action Systems) */
+/* ---------------------------------------------------- */
+.primary-btn, .secondary-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius-sm);
+    font-weight: 700;
+    font-family: var(--font-heading);
+    transition: all var(--transition-speed);
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+.primary-btn {
+    background: var(--color-accent);
+    color: var(--color-primary-bg); 
+    border: 2px solid var(--color-accent); 
+    box-shadow: var(--shadow-sharp);
+}
+.glow-btn:hover {
+    /* Strong activation pulse */
+    box-shadow: 0 0 10px var(--color-accent), 0 0 20px var(--color-accent), var(--shadow-sharp);
+    transform: translate(0);
+}
+
+.secondary-btn {
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+    background-color: var(--color-secondary-bg);
+    box-shadow: var(--shadow-sharp);
+}
+.secondary-btn:hover {
+    background-color: var(--color-accent);
+    color: var(--color-primary-bg);
+}
+
+
+/* ---------------------------------------------------- */
+/* 4. SECTIONS & COMMON LAYOUTS */
+/* ---------------------------------------------------- */
+section {
+    padding: 6rem 0;
+    position: relative;
+    border-bottom: 2px dashed var(--color-accent); /* Laser Grid Separator */
+}
+section:last-of-type {
+    border-bottom: none; 
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--color-accent);
+    text-align: center;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+}
+.section-title i[data-feather] {
+    stroke: var(--color-accent); 
+}
+
+/* Badges for skills and focus areas */
+.badge {
+    background-color: var(--color-secondary-bg);
+    border: 1px solid var(--color-accent);
+    color: var(--color-text);
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--border-radius-sm);
+}
+
+/* ---------------------------------------------------- */
+/* 5. HOME / HERO SECTION */
+/* ---------------------------------------------------- */
+.hero-section {
+    padding-top: 10rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.name-title {
+    font-size: 5.5rem; 
+    font-weight: 700;
+    color: var(--color-text);
+    font-family: var(--font-heading);
+}
+
+.dynamic-title-container {
+    color: var(--color-accent);
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+}
+
+/* Typing/Fade Effect adjustments */
+.name-title {
+    border-right: 0.15em solid var(--color-accent); 
+}
+.dynamic-title {
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* ---------------------------------------------------- */
+/* 6. ABOUT SECTION */
+/* ---------------------------------------------------- */
+.about-content {
+    display: flex;
+    gap: 4rem;
+    align-items: flex-start;
+}
+.profile-avatar {
+    width: 300px;
+    height: auto;
+    border: 3px solid var(--color-accent);
+    box-shadow: var(--shadow-sharp);
+    border-radius: var(--border-radius-sm);
+    flex-shrink: 0;
+}
+.focus-areas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* ---------------------------------------------------- */
+/* 7. SKILLS SECTION (Modules) */
+/* ---------------------------------------------------- */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+.skill-group h3 {
+    color: var(--color-accent);
+    font-family: var(--font-heading);
+    margin-bottom: 1rem;
+}
+.skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.skill-item {
+    border: 1px solid var(--color-accent) !important;
+    background-color: var(--color-primary-bg) !important;
+    color: var(--color-text);
+    font-family: var(--font-heading);
+    padding: 0.5rem 1rem;
+}
+
+
+/* ---------------------------------------------------- */
+/* 8. PROJECTS SECTION */
+/* ---------------------------------------------------- */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+.project-card h3 {
+    color: var(--color-accent);
+    font-family: var(--font-heading);
+    margin: 0.5rem 0;
+}
+.project-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--border-radius-sm);
+    border: 2px solid var(--color-accent);
+}
+.tech-stack {
+    margin: 1rem 0;
+    display: flex;
+    gap: 0.5rem;
+}
+.tech-icon {
+    background-color: var(--color-accent);
+    color: var(--color-primary-bg);
+    font-weight: 700;
+    font-family: var(--font-heading);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--border-radius-sm);
+}
+
+.github-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--color-accent);
+    font-family: var(--font-heading);
+}
+
+
+/* ---------------------------------------------------- */
+/* 9. EDUCATION SECTION (Timeline) */
+/* ---------------------------------------------------- */
+.timeline {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    background-color: var(--color-accent);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1px;
+}
+.timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    width: 50%;
+}
+.timeline-item:nth-child(odd) {
+    left: 0;
+}
+.timeline-item:nth-child(even) {
+    left: 50%;
+}
+.timeline-dot {
+    height: 15px;
+    width: 15px;
+    background-color: var(--color-primary-bg);
+    border: 2px solid var(--color-accent);
+    position: absolute;
+    top: 25px;
+    border-radius: 50%;
+    z-index: 1;
+}
+.timeline-item:nth-child(odd) .timeline-dot {
+    right: -7.5px;
+}
+.timeline-item:nth-child(even) .timeline-dot {
+    left: -7.5px;
+}
+
+.timeline-content h3 {
+    color: var(--color-accent);
+    font-family: var(--font-heading);
+}
+
+/* ---------------------------------------------------- */
+/* 10. CONTACT SECTION & FOOTER */
+/* ---------------------------------------------------- */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: flex-start;
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-heading);
+    color: var(--color-accent);
+}
+.form-group input, 
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--color-border);
+    background-color: var(--color-secondary-bg);
+    color: var(--color-text);
+    border-radius: var(--border-radius-sm);
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 5px var(--color-accent);
+    outline: none;
+}
+.social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.social-icon {
+    display: inline-block;
+    padding: 1rem;
+    text-align: center;
+}
+
+.scroll-top-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    padding: 0;
+    box-shadow: 0 0 10px var(--color-accent), var(--shadow-sharp);
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent) !important;
+    z-index: 900;
+    display: none; /* Controlled by JS */
+    transition: all 0.3s ease;
+}
+
+footer {
+    padding: 2rem 0;
+    text-align: center;
+    border-top: 2px dashed var(--color-accent);
+    color: var(--color-accent);
+    font-family: var(--font-heading);
+}
+
+/* ---------------------------------------------------- */
+/* 11. ANIMATIONS */
+/* ---------------------------------------------------- */
+
+.animate-fade-in {
+    opacity: 0;
+    animation: fadeIn 1s ease-out 1s forwards;
+}
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+.animate-typing {
+    width: 0;
+    overflow: hidden; 
+    white-space: nowrap; 
+    animation: 
+        typing 4s steps(28, end) forwards,
+        blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--color-accent); }
+}
+
+.animate-scroll-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.animate-scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+
+
+/* ---------------------------------------------------- */
+/* 12. RESPONSIVENESS (Expanded for All Screens) */
+/* ---------------------------------------------------- */
+
+/* --- GENERAL MOBILE STYLES (Applies to screens <= 768px) --- */
+@media (max-width: 768px) {
+    /* 1. Base Scaling */
+    .container {
+        padding: 0 1rem; /* Reduce padding on edges */
+    }
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    section {
+        padding: 4rem 0; /* Reduce vertical padding */
+    }
+    
+    /* 2. Header and Navigation */
+    .logo {
+        font-size: 1.3rem;
+    }
+    /* Mobile Menu - Starting off-screen */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -300px; /* Start off-screen */
+        width: 300px;
+        height: 100%;
+        padding-top: 5rem;
+        flex-direction: column;
+        gap: 1.5rem;
+        background-color: var(--color-primary-bg);
+        border-left: 2px solid var(--color-accent);
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+        transition: right 0.3s ease-in-out; 
+        z-index: 999;
+    }
+    .nav-links.open { 
+        right: 0; 
+    }
+    /* Timeline Fix for Mobile */
+    .timeline::after {
+        left: 31px;
+    }
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+    .timeline-item:nth-child(even) {
+        left: 0%;
+    }
+    .timeline-item:nth-child(odd) .timeline-dot,
+    .timeline-item:nth-child(even) .timeline-dot {
+        left: 25px;
+        right: auto;
+    }
+
+
+    /* 3. Home/Hero Section */
+    .name-title {
+        font-size: 3.5rem; /* Scale down the large title */
+    }
+    .dynamic-title-container {
+        font-size: 1.2rem;
+    }
+    .cta-group {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    /* 4. About Section */
+    .about-content {
+        flex-direction: column; /* Stack image and text */
+        gap: 2rem;
+        align-items: center;
+    }
+    .profile-avatar {
+        max-width: 250px;
+        width: 100%;
+    }
+    .bio-text {
+        text-align: center;
+    }
+    .focus-areas {
+        justify-content: center; /* Center badges */
+    }
+
+    /* 5. Skills Section */
+    .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 2 columns on tablet/mobile */
+        gap: 1.5rem;
+    }
+    
+    /* 6. Projects Section */
+    .projects-grid {
+        grid-template-columns: 1fr; /* Single column layout for mobile */
+    }
+
+    /* 7. Contact Section */
+    .contact-grid {
+        grid-template-columns: 1fr; /* Single column layout for contact */
+    }
+    .social-links {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+    .social-icon {
+        min-width: 150px; /* Ensure buttons are wide enough */
+        text-align: center;
+    }
+}
+
+/* HIDE THE MENU TOGGLE ON DESKTOP */
+@media (min-width: 769px) {
+    .menu-toggle {
+        display: none;
+    }
+}
+
+/* --- TABLET/MID-SIZE SCREENS (Specific adjustments for 769px to 1024px) --- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+    .name-title {
+        font-size: 4.5rem;
+    }
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr); /* Two columns for skills on tablets */
+    }
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr); /* Two columns for projects on tablets */
+    }
+}
